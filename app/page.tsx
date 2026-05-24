@@ -1,7 +1,11 @@
+import HeroSection from "./components/herosection/HeroSection";
+
 export default function Home() {
   return (
     <>
-      <main>{/* main content */}</main>
+      <main>
+        <HeroSection />
+      </main>
       <footer>{/* footer content */}</footer>
     </>
   );
