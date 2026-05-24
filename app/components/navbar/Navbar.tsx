@@ -16,7 +16,7 @@ export default function Navbar() {
       className={`flex justify-around p-4 text-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-transparent backdrop-blur-sm shadow-md"
-          : "bg-slate-950/65 backdrop-blur-md "
+          : "bg-[#0f0f0f]/35 backdrop-blur-md "
       }`}
     >
       <div className="px-4 py-2">
