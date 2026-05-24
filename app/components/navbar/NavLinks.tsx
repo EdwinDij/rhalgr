@@ -42,7 +42,7 @@ export default function NavLinks() {
           target={link.external ? "_blank" : undefined}
           rel={link.external ? "noopener noreferrer" : undefined}
           className={`text-md font-medium transition-colors hover:text-amber-500 ${
-            pathname === link.href ? "text-amber-500" : "text-white/70"
+            pathname === link.href ? "text-amber-500 bg-amber-500/10 p-2 rounded" : "text-white/70"
           }`}
         >
           {link.label === "The Balance" ? (
