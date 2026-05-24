@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { BookOpenText, Search, ChevronDown } from "lucide-react";
-import { categories, glossary } from "./glossary";
+import { categories, glossary } from "../../lib/glossary";
 
 export default function Page() {
   const [openTerm, setOpenTerm] = useState<string | null>(null);
