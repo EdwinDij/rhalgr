@@ -123,7 +123,10 @@ const guideSchema = (difficulty: string) => ({
 });
 
 export default config({
-  storage: { kind: "local" },
+  storage: {
+    kind: "github",
+    repo: { owner: process.env.NEXT_PUBLIC_REPO_OWNER!, name: process.env.NEXT_PUBLIC_REPO_NAME! },
+  },
   collections: {
     savage: collection({
       label: "Guides Sadique (Savage)",
