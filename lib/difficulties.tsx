@@ -24,9 +24,12 @@ export const difficulties: Difficulty[] = [
     label: "Savage",
     labelFr: "Sadique",
     description:
-      "Les raids les plus exigeants, conçus pour les joueurs en quête de défi mécanique.",
+      "Des combats plus difficiles que le mode extrême, nécessitant une bonne coordination et une maîtrise des mécaniques.",
     icon: (
-      <Swords size={40} className="text-orange-400 bg-neutral-600/20 p-2 rounded-lg border border-neutral-500/40" />
+      <Swords
+        size={40}
+        className="text-orange-400 bg-neutral-600/20 p-2 rounded-lg border border-neutral-500/40"
+      />
     ),
     href: "/raids?difficulty=Savage",
     color: {
@@ -42,9 +45,12 @@ export const difficulties: Difficulty[] = [
     label: "Ultimate",
     labelFr: "Fatal",
     description:
-      "Le sommet de la difficulté. Des combats longs et implacables pour tester les limites des joueurs.",
+      "Le sommet de la difficulté. Les raids les plus exigeants, conçus pour les joueurs en quête de défi mécanique.",
     icon: (
-      <Crown size={40} className="text-red-400 bg-neutral-600/20 p-2 rounded-lg border border-neutral-500/40" />
+      <Crown
+        size={40}
+        className="text-red-400 bg-neutral-600/20 p-2 rounded-lg border border-neutral-500/40"
+      />
     ),
     href: "/raids?difficulty=Ultimate",
     color: {
@@ -60,8 +66,13 @@ export const difficulties: Difficulty[] = [
     label: "Extreme",
     labelFr: "Extrême",
     description:
-      "Des défis corsés pour les joueurs cherchant à progresser au-delà du contenu normal.",
-    icon: <Zap size={40} className="text-green-400 bg-neutral-600/20 p-2 rounded-lg border border-neutral-500/40" />,
+      "Des défis corsés pour les joueurs cherchant à progresser au-delà du contenu normal, avec des mécaniques un peu plus complexes.",
+    icon: (
+      <Zap
+        size={40}
+        className="text-green-400 bg-neutral-600/20 p-2 rounded-lg border border-neutral-500/40"
+      />
+    ),
     href: "/raids?difficulty=Extreme",
     color: {
       border: "border-green-500/30",
