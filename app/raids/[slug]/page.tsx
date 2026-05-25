@@ -30,7 +30,15 @@ export default async function RaidGuidePage({ params }: Props) {
     <div className="pt-24 min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center gap-2 text-white/40 text-sm mb-8">
-          <span>Raids</span>
+          <span>
+            {frontmatter.difficulty === "Savage"
+              ? "Raid"
+              : frontmatter.difficulty === "Ultimate"
+                ? "Raid"
+                : frontmatter.difficulty === "Extreme"
+                  ? "Défi"
+                  : frontmatter.difficulty}
+          </span>
           <ChevronRight size={14} />
           <span className={difficulty?.color.text}>
             {frontmatter.difficulty}
