@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { difficulties, DifficultyId } from "@/lib/difficulties";
-import { Raid, raids } from "@/lib/raids";
-import DifficultyCard from "../raids/DifficultyCard";
-import RaidTierCard from "../raids/RaidTierCard";
+import { difficulties } from "@/lib/difficulties";
+import { raids } from "@/lib/raids";
+import DifficultyCard from "../raidsCard/DifficultyCard";
+import RaidTierCard from "../raidsCard/RaidTierCard";
 import { filterByDifficulty } from "@/lib/raidUtils";
 
 const filters = ["Tous", "Savage", "Extreme", "Ultimate"] as const;

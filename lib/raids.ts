@@ -12,7 +12,16 @@ export interface Raid {
     iLvl: number;
     coverImage: string;
 }
-
+export interface Extension {
+    id: ExtensionId;
+    label: string;
+}
+export const extensions: Extension[] = [
+    { id: "Dawntrail", label: "Dawntrail" },
+    { id: "Endwalker", label: "Endwalker" },
+    { id: "Shadowbringers", label: "Shadowbringers" },
+    { id: "Stormblood", label: "Stormblood" },
+];
 export const raids: Raid[] = [
     {
         slug: "pandaemonium-anabaseios",
