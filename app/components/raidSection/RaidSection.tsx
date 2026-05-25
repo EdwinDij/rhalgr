@@ -10,6 +10,24 @@ export default function RaidSection() {
           <DifficultyCard key={diff.id} difficulty={diff} />
         ))}
       </div>
+      <div className="flex items-center justify-around mt-12">
+        <h2 className="text-3xl font-bold">Tier de raid Actuel</h2>
+        <div>
+          <button className="px-2 py-2 bg-amber-500 text-black font-semibold rounded hover:bg-amber-600 transition-colors">
+            Tous
+          </button>
+          <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded hover:bg-gray-700 transition-colors ml-4">
+            Extrême
+          </button>
+          <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded hover:bg-gray-700 transition-colors ml-4">
+            Sadique
+          </button>
+          <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded hover:bg-gray-700 transition-colors ml-4">
+            Fatal
+          </button>
+        </div>
+      </div>
+      <div className="mt-8"></div>
     </section>
   );
 }

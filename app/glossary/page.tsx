@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { BookOpenText, Search, ChevronDown } from "lucide-react";
 import { categories, glossary } from "../../lib/glossary";
+import { sortAlphabetically, filterBySearch, filterByCategory } from "@/lib/glossaryUtils";
 
 export default function Page() {
   const [openTerm, setOpenTerm] = useState<string | null>(null);
@@ -67,16 +68,7 @@ export default function Page() {
           </div>
         </div>
         <section className="mt-12 space-y-2">
-          {glossary
-            .sort((a, b) => a.term.localeCompare(b.term))
-            .filter(
-              (entry) =>
-                selectedCategory === "Tous" ||
-                entry.category === selectedCategory,
-            )
-            .filter((entry) =>
-              entry.term.toLowerCase().includes(searchTerm.toLowerCase()),
-            )
+          {sortAlphabetically(filterBySearch(filterByCategory(glossary, selectedCategory), searchTerm))
             .map((entry) => (
               <div
                 key={entry.term}
