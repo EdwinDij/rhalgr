@@ -24,9 +24,10 @@ export default async function RaidGuidePage({ params }: Props) {
   const { id } = await params;
   const guide = getGuideById(id);
   if (!guide) notFound();
-
   const { frontmatter, content } = guide;
   const difficulty = getDifficulty(frontmatter.difficulty);
+    console.log(guide);
+
 
   return (
     <div className="pt-24 min-h-screen">

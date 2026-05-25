@@ -3,77 +3,86 @@ import path from "path";
 import matter from "gray-matter";
 import { Raid } from "./raids";
 
-const guidesDirectory = path.join(process.cwd(), "content/guides");
+const DIFFICULTIES = ["savage", "extreme", "ultimate"] as const;
 
 export function getAllGuides(): Raid[] {
-  if (!fs.existsSync(guidesDirectory)) return [];
+  const allGuides: Raid[] = [];
 
-  const files = fs.readdirSync(guidesDirectory);
+  for (const difficulty of DIFFICULTIES) {
+    const dir = path.join(process.cwd(), "content/guides", difficulty);
+    if (!fs.existsSync(dir)) continue;
 
-  return files
-    .filter((file) => file.endsWith(".mdx"))
-    .map((file) => {
-      const rawId = file.replace(/\.mdx$/, "");
-      const id = rawId.toLowerCase().replace(/\s+/g, "-");
+    const files = fs.readdirSync(dir).filter((f) => f.endsWith(".mdx"));
 
-      const filePath = path.join(guidesDirectory, file);
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      const { data } = matter(fileContent);
+    for (const file of files) {
+      const id = file.replace(/\.mdx$/, "");
+      const filePath = path.join(dir, file);
+      const { data } = matter(fs.readFileSync(filePath, "utf-8"));
 
-      // let cleanTitle = id;
-      // if (data.title) {
-      //   if (typeof data.title === "object" && data.title.name) {
-      //     cleanTitle = data.title.name;
-      //   } else if (typeof data.title === "string") {
-      //     cleanTitle = data.title;
-      //   }
-      // }
+      const title =
+        typeof data.title === "object" && data.title?.name
+          ? data.title.name
+          : typeof data.title === "string"
+            ? data.title
+            : id;
 
-      // console.log(`Chargement du guide : ${data.title} (ID: ${id})`);
-      // console.log("Données frontmatter :", data);
-      return {
-        id: id,
-        title: data.title,
-        description: data.description,
-        difficulty: data.difficulty,
-        extension: data.extension,
-        bossCount: data.bossCount,
-        iLvl: data.iLvl,
-        currentTier: data.currentTier,
-        coverImage: data.coverImage,
-      } as Raid;
-    });
+      allGuides.push({
+        id,
+        title,
+        description: data.description || "",
+        difficulty: data.difficulty || difficulty.slice(0, 1).toUpperCase() + difficulty.slice(1),
+        extension: data.extension || "Dawntrail",
+        bossCount: data.bossCount || 1,
+        iLvl: data.iLvl || 0,
+        coverImage: data.coverImage || "",
+        currentTier: data.currentTier === "oui" ? "oui" : "non",
+      } as Raid);
+    }
+  }
+
+  return allGuides;
 }
 
 export function getGuideById(id: string) {
   const cleanId = id.toLowerCase().replace(/\s+/g, "-");
-  const filePath = path.join(guidesDirectory, `${cleanId}.mdx`);
-  console.log(`Recherche du guide avec ID : ${cleanId} vs dans le fichier : ${filePath}`);
 
-  if (!fs.existsSync(filePath)) return null;
+  for (const difficulty of DIFFICULTIES) {
+    const filePath = path.join(
+      process.cwd(),
+      "content/guides",
+      difficulty,
+      `${cleanId}.mdx`
+    );
 
-  const fileContent = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(fileContent);
+    if (!fs.existsSync(filePath)) continue;
 
-  let cleanTitle = cleanId.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-  if (data.title) {
-    if (typeof data.title === "object" && data.title.name) {
-      cleanTitle = data.title.name;
-    } else if (typeof data.title === "string") {
-      cleanTitle = data.title;
-    }
+    const { data, content } = matter(fs.readFileSync(filePath, "utf-8"));
+
+    const title =
+      typeof data.title === "object" && data.title?.name
+        ? data.title.name
+        : typeof data.title === "string"
+          ? data.title
+          : cleanId
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(" ");
+
+    const finalContent =
+      content && content.trim() !== "" ? content : data.content || "";
+
+    const { title: _, ...restOfData } = data;
+
+    return {
+      frontmatter: {
+        ...restOfData,
+        difficulty: data.difficulty || difficulty.slice(0, 1).toUpperCase() + difficulty.slice(1),
+        title,
+        id: cleanId,
+      } as Raid,
+      content: finalContent,
+    };
   }
 
-  const finalContent = content && content.trim() !== "" ? content : (data.content || "");
-
-  const { title, ...restOfData } = data;
-
-  return {
-    frontmatter: {
-      ...restOfData,
-      title: cleanTitle,
-      id: cleanId
-    } as Raid,
-    content: finalContent,
-  };
+  return null;
 }
