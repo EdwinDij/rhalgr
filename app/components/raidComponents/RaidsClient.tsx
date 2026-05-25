@@ -90,7 +90,7 @@ export default function RaidsClient({ raids }: { raids: Raid[] }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRaids.map((raid) => (
-            <RaidTierCard key={raid.slug} raid={raid} />
+            <RaidTierCard key={raid.id} raid={raid} />
           ))}
         </div>
 

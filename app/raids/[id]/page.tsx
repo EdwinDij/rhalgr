@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { ChevronRight, Swords, Shield, Users } from "lucide-react";
-import { getGuideBySlug, getAllGuides } from "@/lib/mdx";
+import { getGuideById, getAllGuides } from "@/lib/mdx";
 import { getDifficulty } from "@/lib/difficulties";
 import MechanicCard from "../../components/raidsCard/MechanicCard";
 import PositionSchema from "../../components/raidComponents/PositionSchema";
@@ -13,16 +13,16 @@ const components = {
 
 export async function generateStaticParams() {
   const guides = getAllGuides();
-  return guides.map((guide) => ({ slug: guide.slug }));
+  return guides.map((guide) => ({ id: guide.id }));
 }
 
 interface Props {
-  params: { slug: string };
+  params: { id: string };
 }
 
 export default async function RaidGuidePage({ params }: Props) {
-  const { slug } = await params;
-  const guide = getGuideBySlug(slug);
+  const { id } = await params;
+  const guide = getGuideById(id);
   if (!guide) notFound();
 
   const { frontmatter, content } = guide;

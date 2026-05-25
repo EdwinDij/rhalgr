@@ -11,7 +11,7 @@ export default function RaidTierCard({ raid }: RaidTierCardProps) {
   const difficulty = getDifficulty(raid.difficulty);
 
   return (
-    <Card href={`/raids/${raid.slug}`}>
+    <Card href={`/raids/${raid.id}`}>
       <div className="relative h-40 bg-gray-700/50 overflow-hidden">
         <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent z-10" />
         <div className="absolute top-3 left-3 flex gap-2 z-20">

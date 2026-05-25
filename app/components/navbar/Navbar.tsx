@@ -1,17 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import NavLinks from "./NavLinks";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const pathname = usePathname();
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (pathname?.startsWith("/keystatic")) {
+    return null;
+  }
 
   return (
     <div
@@ -26,12 +31,10 @@ export default function Navbar() {
           XIV <span className="text-amber-500">Thaliak</span>
         </h1>
 
-        {/* Desktop */}
         <div className="hidden md:flex space-x-10 text-white/75">
           <NavLinks />
         </div>
 
-        {/* Hamburger */}
         <button
           className="md:hidden text-white/75 cursor-pointer"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -40,7 +43,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Menu mobile */}
       {menuOpen && (
         <div className="md:hidden bg-[#0f0f0f]/95 backdrop-blur-md border-t border-gray-800/60 px-6 py-4">
           <NavLinks onLinkClick={() => setMenuOpen(false)} />

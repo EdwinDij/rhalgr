@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
@@ -20,20 +21,24 @@ export const metadata: Metadata = {
     "Thaliak est une site de guides pour les joueurs de Final Fantasy XIV. Il propose des guides pour les contenus extrêmes, sadiques et fatals",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-invoke-path") || "";
+  const isKeystatic = pathname.startsWith("/keystatic");
+
   return (
     <html
       lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <Navbar />
       <body className="min-h-full flex flex-col">
+        {!isKeystatic && <Navbar />}
         {children}
-        <Footer />
+        {!isKeystatic && <Footer />}
       </body>
     </html>
   );

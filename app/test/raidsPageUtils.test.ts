@@ -3,7 +3,7 @@ import { filterByDifficulty, filterByExtension } from "../../lib/raidUtils";
 
 const mockRaids: Raid[] = [
     {
-        title: "Raid 1", difficulty: "Savage", slug: "raid-1",
+        title: "Raid 1", difficulty: "Savage", id: "raid-1",
         description: "",
         extension: "Dawntrail",
         bossCount: 0,
@@ -11,7 +11,7 @@ const mockRaids: Raid[] = [
         coverImage: ""
     },
     {
-        title: "Raid 2", difficulty: "Extreme", slug: "raid-2",
+        title: "Raid 2", difficulty: "Extreme", id: "raid-2",
         description: "",
         extension: "Dawntrail",
         bossCount: 0,
@@ -19,7 +19,7 @@ const mockRaids: Raid[] = [
         coverImage: ""
     },
     {
-        title: "Raid 3", difficulty: "Ultimate", slug: "raid-3",
+        title: "Raid 3", difficulty: "Ultimate", id: "raid-3",
         description: "",
         extension: "Stormblood",
         bossCount: 0,
