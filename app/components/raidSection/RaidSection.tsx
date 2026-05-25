@@ -22,9 +22,9 @@ export default function RaidSection() {
         ))}
       </div>
 
-      <div className="flex items-center justify-between mt-16 mb-6">
-        <h2 className="text-3xl font-bold">Tiers de Raid</h2>
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-16 mb-6 gap-4">
+        <h2 className="text-3xl font-bold text-center">Tiers de Raid</h2>
+        <div className="flex flex-wrap gap-2 justify-center">
           {filters.map((filter) => (
             <button
               key={filter}

@@ -30,7 +30,11 @@ const links = [
   },
 ];
 
-export default function NavLinks() {
+interface NavLinksProps {
+  onLinkClick?: () => void;
+}
+
+export default function NavLinks({ onLinkClick }: NavLinksProps) {
   const pathname = usePathname();
 
   return (
@@ -44,6 +48,7 @@ export default function NavLinks() {
           className={`text-md font-medium transition-colors hover:text-amber-500 ${
             pathname === link.href ? "text-amber-500 bg-amber-500/10 p-2 rounded" : "text-white/70"
           }`}
+          onClick={onLinkClick}
         >
           {link.label === "The Balance" ? (
             <>
