@@ -1,33 +1,52 @@
-import { difficulties } from "@/lib/difficulties";
+"use client";
+import { useState } from "react";
+import { difficulties, DifficultyId } from "@/lib/difficulties";
+import { raids } from "@/lib/raids";
 import DifficultyCard from "../raids/DifficultyCard";
+import RaidTierCard from "../raids/RaidTierCard";
+
+const filters = ["Tous", "Savage", "Extreme", "Ultimate"] as const;
 
 export default function RaidSection() {
+  const [activeFilter, setActiveFilter] = useState<string>("Tous");
+
+  const filteredRaids = raids.filter(
+    (raid) => activeFilter === "Tous" || raid.difficulty === activeFilter
+  );
+
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <h2 className="text-3xl font-bold mb-4">Contenu par difficulté</h2>
+      <h2 className="text-3xl font-bold mb-8">Contenu par difficulté</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {difficulties.map((diff) => (
           <DifficultyCard key={diff.id} difficulty={diff} />
         ))}
       </div>
-      <div className="flex items-center justify-around mt-12">
-        <h2 className="text-3xl font-bold">Tier de raid Actuel</h2>
-        <div>
-          <button className="px-2 py-2 bg-amber-500 text-black font-semibold rounded hover:bg-amber-600 transition-colors">
-            Tous
-          </button>
-          <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded hover:bg-gray-700 transition-colors ml-4">
-            Extrême
-          </button>
-          <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded hover:bg-gray-700 transition-colors ml-4">
-            Sadique
-          </button>
-          <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded hover:bg-gray-700 transition-colors ml-4">
-            Fatal
-          </button>
+
+      <div className="flex items-center justify-between mt-16 mb-6">
+        <h2 className="text-3xl font-bold">Tiers de Raid</h2>
+        <div className="flex gap-2">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-4 py-2 rounded text-sm font-medium cursor-pointer transition-colors ${
+                activeFilter === filter
+                  ? "bg-amber-500 text-black"
+                  : "bg-gray-800/60 text-white hover:bg-gray-700"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
         </div>
       </div>
-      <div className="mt-8"></div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredRaids.map((raid) => (
+          <RaidTierCard key={raid.slug} raid={raid} />
+        ))}
+      </div>
     </section>
   );
 }
