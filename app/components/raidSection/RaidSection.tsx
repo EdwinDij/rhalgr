@@ -1,18 +1,17 @@
 "use client";
 import { useState } from "react";
 import { difficulties, DifficultyId } from "@/lib/difficulties";
-import { raids } from "@/lib/raids";
+import { Raid, raids } from "@/lib/raids";
 import DifficultyCard from "../raids/DifficultyCard";
 import RaidTierCard from "../raids/RaidTierCard";
+import { filterByDifficulty } from "@/lib/raidUtils";
 
 const filters = ["Tous", "Savage", "Extreme", "Ultimate"] as const;
 
 export default function RaidSection() {
   const [activeFilter, setActiveFilter] = useState<string>("Tous");
 
-  const filteredRaids = raids.filter(
-    (raid) => activeFilter === "Tous" || raid.difficulty === activeFilter
-  );
+  const filteredRaids = filterByDifficulty(raids, activeFilter);
 
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
