@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Skull, Swords } from "lucide-react";
 import { Raid, extensions, ExtensionId } from "../../../lib/raids";
 import { difficulties, DifficultyId } from "../../../lib/difficulties";
-import RaidTierCard from "../../components/raidsCard/RaidTierCard";
+import RaidTierCard from "../raidsCard/RaidTierCard";
 import { useSearchParams } from "next/navigation";
 import { filterByExtension, filterByDifficulty } from "../../../lib/raidUtils";
 

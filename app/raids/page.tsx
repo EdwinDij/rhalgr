@@ -1,5 +1,5 @@
 import { getAllGuides } from "@/lib/mdx";
-import RaidsClient from "../components/raidSection/RaidsClient";
+import RaidsClient from "../components/raidComponents/RaidsClient";
 
 export default async function RaidsPage() {
   const guides = getAllGuides();

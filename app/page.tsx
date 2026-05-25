@@ -1,5 +1,5 @@
 import HeroSection from "./components/heroSection/HeroSection";
-import RaidSection from "./components/raidSection/RaidSection";
+import RaidSection from "./components/raidComponents/RaidSection";
 
 export default function Home() {
   return (

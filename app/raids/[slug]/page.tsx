@@ -4,9 +4,11 @@ import { ChevronRight, Swords, Shield, Users } from "lucide-react";
 import { getGuideBySlug, getAllGuides } from "@/lib/mdx";
 import { getDifficulty } from "@/lib/difficulties";
 import MechanicCard from "../../components/raidsCard/MechanicCard";
+import PositionSchema from "../../components/raidComponents/PositionSchema";
 
 const components = {
   MechanicCard,
+  PositionSchema,
 };
 
 export async function generateStaticParams() {
@@ -30,6 +32,8 @@ export default async function RaidGuidePage({ params }: Props) {
     <div className="pt-24 min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center gap-2 text-white/40 text-sm mb-8">
+          <span className="text-white/70">{frontmatter.extension}</span>
+          <ChevronRight size={14} />
           <span>
             {frontmatter.difficulty === "Savage"
               ? "Raid"
