@@ -39,30 +39,37 @@ export default function NavLinks({ onLinkClick }: NavLinksProps) {
 
   return (
     <div className="flex items-center gap-6">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          target={link.external ? "_blank" : undefined}
-          rel={link.external ? "noopener noreferrer" : undefined}
-          className={`text-md font-medium transition-colors hover:text-amber-500 ${
-            pathname === link.href ? "text-amber-500 bg-amber-500/10 p-2 rounded" : "text-white/70"
-          }`}
-          onClick={onLinkClick}
-        >
-          {link.label === "The Balance" ? (
-            <>
-              {link.label}
-              {link.icon}
-            </>
-          ) : (
-            <>
-              {link.icon}
-              {link.label}
-            </>
-          )}
-        </Link>
-      ))}
+      {links.map((link) => {
+        // 🛠️ FIX : On calcule si le lien est actif ou sous-actif
+        const isActive = link.href === "/" 
+          ? pathname === "/" 
+          : pathname.startsWith(link.href);
+
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            target={link.external ? "_blank" : undefined}
+            rel={link.external ? "noopener noreferrer" : undefined}
+            className={`text-md font-medium transition-colors hover:text-amber-500 ${
+              isActive ? "text-amber-500 bg-amber-500/10 p-2 rounded" : "text-white/70"
+            }`}
+            onClick={onLinkClick}
+          >
+            {link.label === "The Balance" ? (
+              <>
+                {link.label}
+                {link.icon}
+              </>
+            ) : (
+              <>
+                {link.icon}
+                {link.label}
+              </>
+            )}
+          </Link>
+        );
+      })}
     </div>
   );
 }

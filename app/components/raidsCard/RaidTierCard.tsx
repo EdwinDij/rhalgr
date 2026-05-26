@@ -2,6 +2,7 @@ import { Swords } from "lucide-react";
 import Card from "../ui/card/Card";
 import { Raid } from "@/lib/raids";
 import { getDifficulty } from "@/lib/difficulties";
+import Image from "next/image";
 
 interface RaidTierCardProps {
   raid: Raid;
@@ -13,7 +14,21 @@ export default function RaidTierCard({ raid }: RaidTierCardProps) {
   return (
     <Card href={`/raids/${raid.id}`}>
       <div className="relative h-40 bg-gray-700/50 overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent z-10" />
+        {raid.coverImage ? (
+          <Image
+            src={raid.coverImage}
+            alt={`${raid.title} cover`}
+            fill
+            className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gray-600/50 flex items-center justify-center">
+            <span className="text-white/50 text-lg font-bold">
+              Visuell en attente
+            </span>
+          </div>
+        )}
+
         <div className="absolute top-3 left-3 flex gap-2 z-20">
           <span
             className={`text-xs font-semibold px-2 py-1 rounded border ${difficulty?.color.badge}`}
