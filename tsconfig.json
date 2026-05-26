@@ -32,6 +32,6 @@
     "**/*.mts",
     "keystatic.config.tsx",
     "next.config.ts"
-  ],
+, "app/components/admin/ArenaEditor.tsx"  ],
   "exclude": ["node_modules"]
 }

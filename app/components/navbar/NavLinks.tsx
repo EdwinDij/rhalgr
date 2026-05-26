@@ -23,6 +23,12 @@ const links = [
     external: false,
   },
   {
+    href: "/strat-board",
+    label: "Tableau stratégique",
+    // icon: <ExternalLink className="inline ml-1" size={14} />,
+    external: false,
+  },
+  {
     href: "https://www.thebalanceffxiv.com/",
     label: "The Balance",
     icon: <ExternalLink className="inline ml-1" size={14} />,
@@ -40,10 +46,8 @@ export default function NavLinks({ onLinkClick }: NavLinksProps) {
   return (
     <div className="flex items-center gap-6">
       {links.map((link) => {
-        // 🛠️ FIX : On calcule si le lien est actif ou sous-actif
-        const isActive = link.href === "/" 
-          ? pathname === "/" 
-          : pathname.startsWith(link.href);
+        const isActive =
+          link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
 
         return (
           <Link
@@ -52,7 +56,9 @@ export default function NavLinks({ onLinkClick }: NavLinksProps) {
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
             className={`text-md font-medium transition-colors hover:text-amber-500 ${
-              isActive ? "text-amber-500 bg-amber-500/10 p-2 rounded" : "text-white/70"
+              isActive
+                ? "text-amber-500 bg-amber-500/10 p-2 rounded"
+                : "text-white/70"
             }`}
             onClick={onLinkClick}
           >
