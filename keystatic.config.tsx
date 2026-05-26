@@ -19,6 +19,11 @@ const positionSchemaBlock = block({
       label: "Positions des tokens (Format JSON String)",
       multiline: true,
     }),
+    positionsAfter: fields.text({
+      // 👈
+      label: "Positions — Après (JSON, optionnel)",
+      multiline: true,
+    }),
   },
   ContentView: (props) => {
     let count = 0;
@@ -125,7 +130,10 @@ const guideSchema = (difficulty: string) => ({
 export default config({
   storage: {
     kind: "github",
-    repo: { owner: process.env.NEXT_PUBLIC_REPO_OWNER!, name: process.env.NEXT_PUBLIC_REPO_NAME! },
+    repo: {
+      owner: process.env.NEXT_PUBLIC_REPO_OWNER!,
+      name: process.env.NEXT_PUBLIC_REPO_NAME!,
+    },
   },
   collections: {
     savage: collection({

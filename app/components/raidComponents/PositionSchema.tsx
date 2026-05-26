@@ -1,6 +1,34 @@
+"use client";
+import { useState } from "react";
+
 type Shape = "circle" | "square" | "rectangle";
 type Role = "MT" | "OT" | "H1" | "H2" | "R1" | "R2" | "M1" | "M2" | "Boss";
 type Waymark = "A" | "B" | "C" | "D" | "1" | "2" | "3" | "4";
+
+interface AoE {
+  type: "cone" | "circle" | "rect" | "share" | "tankbuster";
+  x: number;
+  y: number;
+  range: number;
+  direction: number;
+  angle?: number;
+  width?: number;
+}
+
+interface Position {
+  role: Role | Waymark;
+  x: number;
+  y: number;
+  label?: string;
+}
+
+interface PositionSchemaProps {
+  positions: Position[] | string;
+  positionsAfter?: Position[] | string;
+  shape?: Shape;
+  label?: string;
+  size?: number;
+}
 
 const roleColors: Record<Role, { bg: string; text: string; border: string }> = {
   MT: { bg: "#1e40af", text: "#ffffff", border: "#3b82f6" },
@@ -27,19 +55,6 @@ const waymarkColors: Record<
   "3": { bg: "#1e3a5f", text: "#ffffff", border: "#3b82f6" },
   "4": { bg: "#4c1d95", text: "#ffffff", border: "#a78bfa" },
 };
-interface PositionSchemaProps {
-  positions: Position[] | string;
-  shape?: Shape;
-  label?: string;
-  size?: number;
-}
-
-interface Position {
-  role: Role | Waymark;
-  x: number;
-  y: number;
-  label?: string;
-}
 
 const isWaymark = (role: Role | Waymark): role is Waymark =>
   ["A", "B", "C", "D", "1", "2", "3", "4"].includes(role);
@@ -47,16 +62,29 @@ const isWaymark = (role: Role | Waymark): role is Waymark =>
 const isLetterWaymark = (role: Waymark): boolean =>
   ["A", "B", "C", "D"].includes(role);
 
+const parsePositions = (
+  prop: Position[] | string,
+): { tokens: Position[]; aoes: AoE[] } => {
+  const raw = typeof prop === "string" ? JSON.parse(prop) : prop;
+  if (Array.isArray(raw)) return { tokens: raw, aoes: [] };
+  return { tokens: raw.tokens ?? [], aoes: raw.aoes ?? [] };
+};
+
 export default function PositionSchema({
   positions: positionsProp = [],
+  positionsAfter: positionsAfterProp,
   shape = "circle",
   label,
   size = 400,
 }: PositionSchemaProps) {
-  const positions: Position[] =
-    typeof positionsProp === "string"
-      ? JSON.parse(positionsProp)
-      : positionsProp;
+  const [showAfter, setShowAfter] = useState(false);
+
+  const { tokens, aoes } = parsePositions(positionsProp);
+  const after = positionsAfterProp ? parsePositions(positionsAfterProp) : null;
+
+  const currentTokens = showAfter && after ? after.tokens : tokens;
+  const currentAoes = showAfter && after ? after.aoes : aoes;
+
   const padding = 40;
   const innerSize = size - padding * 2;
   const center = size / 2;
@@ -114,6 +142,24 @@ export default function PositionSchema({
           {label}
         </p>
       )}
+
+      {after && (
+        <div className="flex justify-center gap-2 mb-4">
+          <button
+            onClick={() => setShowAfter(false)}
+            className={`px-4 py-1.5 text-xs font-medium rounded transition-colors ${!showAfter ? "bg-amber-500 text-black" : "bg-gray-800/60 text-white/60 hover:bg-gray-700"}`}
+          >
+            Avant
+          </button>
+          <button
+            onClick={() => setShowAfter(true)}
+            className={`px-4 py-1.5 text-xs font-medium rounded transition-colors ${showAfter ? "bg-amber-500 text-black" : "bg-gray-800/60 text-white/60 hover:bg-gray-700"}`}
+          >
+            Après
+          </button>
+        </div>
+      )}
+
       <div className="flex justify-center">
         <svg
           width={size}
@@ -123,6 +169,8 @@ export default function PositionSchema({
         >
           <rect width={size} height={size} fill="#0d0f17" rx={8} />
           {getArenaPath()}
+
+          {/* Lignes cardinales */}
           <line
             x1={center}
             y1={padding}
@@ -142,7 +190,105 @@ export default function PositionSchema({
             strokeDasharray="4,4"
           />
 
-          {positions.map((pos, i) => {
+          {/* AoEs — rendus avant les jetons pour être en dessous */}
+          {currentAoes.map((aoe, i) => {
+            const cx = padding + aoe.x * innerSize;
+            const cy = padding + aoe.y * innerSize;
+            const r = aoe.range * innerSize;
+
+            if (aoe.type === "circle") {
+              return (
+                <circle
+                  key={i}
+                  cx={cx}
+                  cy={cy}
+                  r={r}
+                  fill="rgba(239,68,68,0.15)"
+                  stroke="rgba(239,68,68,0.5)"
+                  strokeWidth={1.5}
+                />
+              );
+            }
+
+            if (aoe.type === "share") {
+              return (
+                <circle
+                  key={i}
+                  cx={cx}
+                  cy={cy}
+                  r={r}
+                  fill="rgba(234,179,8,0.1)"
+                  stroke="rgba(234,179,8,0.6)"
+                  strokeWidth={1.5}
+                  strokeDasharray="4,3"
+                />
+              );
+            }
+
+            if (aoe.type === "tankbuster") {
+              return (
+                <g key={i}>
+                  <circle
+                    cx={cx}
+                    cy={cy}
+                    r={r}
+                    fill="rgba(239,68,68,0.1)"
+                    stroke="rgba(239,68,68,0.7)"
+                    strokeWidth={2}
+                  />
+                  <circle
+                    cx={cx}
+                    cy={cy}
+                    r={r * 0.5}
+                    fill="none"
+                    stroke="rgba(239,68,68,0.4)"
+                    strokeWidth={1}
+                  />
+                </g>
+              );
+            }
+
+            if (aoe.type === "rect" && aoe.width !== undefined) {
+              const w = aoe.width * innerSize;
+              const h = aoe.range * innerSize;
+              return (
+                <rect
+                  key={i}
+                  x={cx - w / 2}
+                  y={cy}
+                  width={w}
+                  height={h}
+                  fill="rgba(239,68,68,0.15)"
+                  stroke="rgba(239,68,68,0.5)"
+                  strokeWidth={1.5}
+                  transform={`rotate(${aoe.direction}, ${cx}, ${cy})`}
+                />
+              );
+            }
+
+            if (aoe.type === "cone" && aoe.angle !== undefined) {
+              const rad = aoe.direction * (Math.PI / 180);
+              const halfAngle = (aoe.angle / 2) * (Math.PI / 180);
+              const x1 = cx + r * Math.cos(rad - halfAngle);
+              const y1 = cy + r * Math.sin(rad - halfAngle);
+              const x2 = cx + r * Math.cos(rad + halfAngle);
+              const y2 = cy + r * Math.sin(rad + halfAngle);
+              return (
+                <path
+                  key={i}
+                  d={`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${aoe.angle > 180 ? 1 : 0} 1 ${x2} ${y2} Z`}
+                  fill="rgba(239,68,68,0.15)"
+                  stroke="rgba(239,68,68,0.5)"
+                  strokeWidth={1.5}
+                />
+              );
+            }
+
+            return null;
+          })}
+
+          {/* Jetons joueurs & waymarks */}
+          {currentTokens.map((pos, i) => {
             const { cx, cy } = toSvgCoords(pos.x, pos.y);
             const colors = isWaymark(pos.role)
               ? waymarkColors[pos.role as Waymark]

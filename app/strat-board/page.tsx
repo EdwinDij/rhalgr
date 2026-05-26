@@ -121,13 +121,24 @@ export default function StratBoard() {
   const setCurrentState =
     activeTab === "before" ? setBeforeState : setAfterState;
 
-  const positionsJson = JSON.stringify(
-    currentState.elements.map((el) => ({
+  const positionsJson = JSON.stringify({
+    tokens: currentState.elements.map((el) => ({
       role: el.id === "BOSS" ? "Boss" : el.id,
       x: Math.round((el.x / 100) * 100) / 100,
       y: Math.round((el.y / 100) * 100) / 100,
     })),
-  );
+    aoes: currentState.aoes.map((aoe) => ({
+      type: aoe.type,
+      x: Math.round((aoe.x / 100) * 100) / 100,
+      y: Math.round((aoe.y / 100) * 100) / 100,
+      range: Math.round((aoe.range / 100) * 100) / 100,
+      direction: aoe.direction,
+      ...(aoe.angle !== undefined ? { angle: aoe.angle } : {}),
+      ...(aoe.width !== undefined
+        ? { width: Math.round((aoe.width / 100) * 100) / 100 }
+        : {}),
+    })),
+  });
 
   const switchTab = (targetTab: "before" | "after") => {
     if (targetTab === "after" && activeTab === "before") {
