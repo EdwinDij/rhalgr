@@ -57,7 +57,6 @@ export default function PositionSchema({
     typeof positionsProp === "string"
       ? JSON.parse(positionsProp)
       : positionsProp;
-  console.log("position reçue", positions);
   const padding = 40;
   const innerSize = size - padding * 2;
   const center = size / 2;
