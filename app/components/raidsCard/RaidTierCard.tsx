@@ -24,7 +24,7 @@ export default function RaidTierCard({ raid }: RaidTierCardProps) {
         ) : (
           <div className="absolute inset-0 bg-gray-600/50 flex items-center justify-center">
             <span className="text-white/50 text-lg font-bold">
-              Visuell en attente
+              Visuel en attente
             </span>
           </div>
         )}

@@ -6,6 +6,8 @@ import { difficulties, DifficultyId } from "../../../lib/difficulties";
 import RaidTierCard from "../raidsCard/RaidTierCard";
 import { useSearchParams } from "next/navigation";
 import { filterByExtension, filterByDifficulty } from "../../../lib/raidUtils";
+import { motion, AnimatePresence } from "framer-motion";
+import AnimatedCard from "../ui/AnimatedCard";
 
 type FilterDifficulty = DifficultyId | "Tous";
 type FilterExtension = ExtensionId | "Toutes";
@@ -83,16 +85,25 @@ export default function RaidsClient({ raids }: { raids: Raid[] }) {
           </select>
         </div>
 
-        <p className="text-white/40 text-sm mb-6">
+        <motion.p
+          key={filteredRaids.length}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-white/40 text-sm mb-6"
+        >
           {filteredRaids.length} guide{filteredRaids.length > 1 ? "s" : ""}{" "}
           trouvé{filteredRaids.length > 1 ? "s" : ""}
-        </p>
+        </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredRaids.map((raid) => (
-            <RaidTierCard key={raid.id} raid={raid} />
-          ))}
-        </div>
+        <AnimatePresence mode="popLayout">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredRaids.map((raid, index) => (
+              <AnimatedCard key={raid.id} index={index}>
+                <RaidTierCard raid={raid} />
+              </AnimatedCard>
+            ))}
+          </div>
+        </AnimatePresence>
 
         {filteredRaids.length === 0 && (
           <div className="text-center py-20 text-white/30">

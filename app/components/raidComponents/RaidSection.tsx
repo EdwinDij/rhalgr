@@ -5,6 +5,9 @@ import DifficultyCard from "../raidsCard/DifficultyCard";
 import RaidTierCard from "../raidsCard/RaidTierCard";
 import { filterByDifficulty } from "@/lib/raidUtils";
 import { Raid } from "@/lib/raids";
+import AnimatedCard from "../ui/AnimatedCard";
+import { Skull } from "lucide-react";
+import Link from "next/link";
 
 interface RaidSectionProps {
   raids: Raid[];
@@ -44,12 +47,27 @@ export default function RaidSection({ raids }: RaidSectionProps) {
           ))}
         </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredRaids.map((raid) => (
-          <RaidTierCard key={raid.id} raid={raid} />
-        ))}
-      </div>
+      {filteredRaids.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredRaids.map((raid, index) => (
+            <AnimatedCard key={raid.id} index={index}>
+              <RaidTierCard raid={raid} />
+            </AnimatedCard>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-20 text-white/30">
+          <Skull className="mx-auto mb-4" size={48} />
+          Aucun guide ne correspond à ces filtres et/ou extension.
+          <br />
+          <Link
+            className="inline-flex items-center gap-1 mt-4 text-sm text-white/50 hover:text-white transition-colors underline hover:no-underline"
+            href="/raids"
+          >
+            Voir tous les raids présents sur le site
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
