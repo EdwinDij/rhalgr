@@ -28,7 +28,7 @@ export default function Navbar() {
     >
       <div className="flex justify-between items-center px-6 py-4">
         <h1>
-          XIV <span className="text-amber-500">Thaliak</span>
+          XIV <span className="text-amber-500">Rhalgr</span>
         </h1>
 
         <div className="hidden md:flex space-x-10 text-white/75">

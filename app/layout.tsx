@@ -17,10 +17,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thaliak.vercel.app"),
+  metadataBase: new URL("https://Rhalgr.vercel.app"),
   title: {
-    default: "Thaliak — Guides de raid FFXIV",
-    template: "%s | Thaliak",
+    default: "Rhalgr — Guides de raid FFXIV",
+    template: "%s | Rhalgr",
   },
   description:
     "Guides stratégiques communautaires pour les raids de Final Fantasy XIV. Mécaniques, positionnements et outils pour la communauté EU francophone.",
@@ -40,15 +40,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://thaliak.vercel.app",
-    siteName: "Thaliak",
-    title: "Thaliak — Guides de raid FFXIV",
+    url: "https://Rhalgr.vercel.app",
+    siteName: "Rhalgr",
+    title: "Rhalgr — Guides de raid FFXIV",
     description: "Guides stratégiques pour les raids de Final Fantasy XIV.",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thaliak — Guides de raid FFXIV",
+    title: "Rhalgr — Guides de raid FFXIV",
     description: "Guides stratégiques pour les raids de Final Fantasy XIV.",
     images: ["/og-image.jpg"],
   },

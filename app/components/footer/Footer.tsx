@@ -43,7 +43,7 @@ export default function Footer() {
                 <Swords size={16} className="text-amber-500" />
               </div>
               <span className="font-bold uppercase tracking-wide">
-                XIV <span className="font-bold text-amber-500">Thaliak</span>
+                XIV <span className="font-bold text-amber-500">Rhalgr</span>
               </span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
@@ -100,7 +100,7 @@ export default function Footer() {
       <div className="border-t border-gray-800/60">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-white/30 text-xs">
-            © 2026 XIV <span className="font-bold">Thaliak</span> — Communauté
+            © 2026 XIV <span className="font-bold">Rhalgr</span> — Communauté
             francophone
           </p>
           <p className="text-white/30 text-xs">

@@ -3,7 +3,7 @@ import { getAllGuides } from "@/lib/mdx";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const guides = getAllGuides();
-  const baseUrl = "https://thaliak.vercel.app";
+  const baseUrl = "https://Rhalgr.vercel.app";
 
   const guideUrls = guides.map((guide) => ({
     url: `${baseUrl}/raids/${guide.id}`,

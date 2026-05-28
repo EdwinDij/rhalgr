@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/keystatic/", "/strat-board/"],
       },
     ],
-    sitemap: "https://thaliak.vercel.app/sitemap.xml",
+    sitemap: "https://Rhalgr.vercel.app/sitemap.xml",
   };
 }
