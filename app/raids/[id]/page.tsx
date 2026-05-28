@@ -13,13 +13,12 @@ const components = {
 
 export async function generateStaticParams() {
   const guides = getAllGuides();
-  return guides.map((guide) => ({ id: guide.id }));
+  return guides.map((guide) => ({ slug: guide.id }));
 }
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
-
 export default async function RaidGuidePage({ params }: Props) {
   const { id } = await params;
   const guide = getGuideById(id);
