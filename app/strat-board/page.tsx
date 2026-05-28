@@ -13,6 +13,12 @@ import {
   Layers,
   Swords,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Strat Board",
+  robots: { index: false, follow: false },
+};
 
 type Shape = "circle" | "square" | "rectangle";
 type Tool = "select" | "player" | "aoe";

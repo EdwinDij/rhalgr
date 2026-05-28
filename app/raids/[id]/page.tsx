@@ -5,6 +5,25 @@ import { getGuideById, getAllGuides } from "@/lib/mdx";
 import { getDifficulty } from "@/lib/difficulties";
 import MechanicCard from "../../components/raidsCard/MechanicCard";
 import PositionSchema from "../../components/raidComponents/PositionSchema";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const guide = getGuideById(id);
+  if (!guide) return { title: "Guide introuvable" };
+
+  return {
+    title: guide.frontmatter.title,
+    description: guide.frontmatter.description,
+    openGraph: {
+      title: guide.frontmatter.title,
+      description: guide.frontmatter.description,
+      images: guide.frontmatter.coverImage
+        ? [{ url: guide.frontmatter.coverImage }]
+        : [],
+    },
+  };
+}
 
 const components = {
   MechanicCard,

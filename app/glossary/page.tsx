@@ -3,7 +3,12 @@ import { useState } from "react";
 import { BookOpenText, Search, ChevronDown } from "lucide-react";
 import { categories, glossary } from "../../lib/glossary";
 import { sortAlphabetically, filterBySearch, filterByCategory } from "@/lib/glossaryUtils";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Glossaire de FFXIV",
+  description: "Lexique complet des termes utilisés dans les raids et la communauté FFXIV — mécaniques, statuts, stratégies et équipement.",
+};
 export default function Page() {
   const [openTerm, setOpenTerm] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("Tous");
