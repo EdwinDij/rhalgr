@@ -1,4 +1,4 @@
-# XIV Thaliak
+# XIV Rhalgr
 
 > Plateforme communautaire de guides stratégiques pour les raids de **Final Fantasy XIV** — mécaniques, positionnements et outils visuels pour la communauté francophone.
 
