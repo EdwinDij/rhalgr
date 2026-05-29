@@ -12,12 +12,12 @@ export default function HeroSection() {
           Maîtrisez les raids de FFXIV
         </span>
         <h1 className="text-6xl font-bold sm:text-center">
-          Bienvenue sur <span className="text-amber-500 ">Rhalgr</span>
+          Bienvenue sur <span className="text-amber-500">Rhalgr</span>
         </h1>
         <p className="text-white/75 text-xl center max-w-2xl sm:text-center">
           Votre compagnon ultime pour les raids de FFXIV. Découvrez des guides
           détaillés, des stratégies de boss, et des outils pour maîtriser chaque
-          rencontre.
+          combat et vaincre les boss les plus redoutables.
         </p>
       </div>
     </section>
