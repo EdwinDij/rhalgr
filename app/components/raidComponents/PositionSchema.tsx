@@ -63,11 +63,18 @@ const isLetterWaymark = (role: Waymark): boolean =>
   ["A", "B", "C", "D"].includes(role);
 
 const parsePositions = (
-  prop: Position[] | string,
+  prop: Position[] | string | undefined | null,
 ): { tokens: Position[]; aoes: AoE[] } => {
-  const raw = typeof prop === "string" ? JSON.parse(prop) : prop;
-  if (Array.isArray(raw)) return { tokens: raw, aoes: [] };
-  return { tokens: raw.tokens ?? [], aoes: raw.aoes ?? [] };
+  if (!prop) return { tokens: [], aoes: [] };
+  
+  try {
+    const raw = typeof prop === "string" ? JSON.parse(prop) : prop;
+    if (Array.isArray(raw)) return { tokens: raw, aoes: [] };
+    return { tokens: raw.tokens ?? [], aoes: raw.aoes ?? [] };
+  } catch (e) {
+    console.error("Erreur de parsing des positions de l'arène :", e);
+    return { tokens: [], aoes: [] }; // Sécurité anti-crash
+  }
 };
 
 export default function PositionSchema({
