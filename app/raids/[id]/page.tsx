@@ -32,7 +32,7 @@ const components = {
 
 export async function generateStaticParams() {
   const guides = getAllGuides();
-  return guides.map((guide) => ({ slug: guide.id }));
+  return guides.map((guide) => ({ id: guide.id }));
 }
 
 interface Props {
