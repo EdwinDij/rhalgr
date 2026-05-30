@@ -64,16 +64,20 @@ const isLetterWaymark = (role: Waymark): boolean =>
 
 const parsePositions = (
   prop: Position[] | string | undefined | null,
-): { tokens: Position[]; aoes: AoE[] } => {
-  if (!prop) return { tokens: [], aoes: [] };
-  
+): { tokens: Position[]; aoes: AoE[]; background: string | null } => {
+  if (!prop) return { tokens: [], aoes: [], background: null };
+
   try {
     const raw = typeof prop === "string" ? JSON.parse(prop) : prop;
-    if (Array.isArray(raw)) return { tokens: raw, aoes: [] };
-    return { tokens: raw.tokens ?? [], aoes: raw.aoes ?? [] };
+    if (Array.isArray(raw)) return { tokens: raw, aoes: [], background: null };
+    return { 
+      tokens: raw.tokens ?? [], 
+      aoes: raw.aoes ?? [], 
+      background: raw.background || null 
+    };
   } catch (e) {
     console.error("Erreur de parsing des positions de l'arène :", e);
-    return { tokens: [], aoes: [] }; // Sécurité anti-crash
+    return { tokens: [], aoes: [], background: null };
   }
 };
 
@@ -86,11 +90,12 @@ export default function PositionSchema({
 }: PositionSchemaProps) {
   const [showAfter, setShowAfter] = useState(false);
 
-  const { tokens, aoes } = parsePositions(positionsProp);
+  const { tokens, aoes, background } = parsePositions(positionsProp);
   const after = positionsAfterProp ? parsePositions(positionsAfterProp) : null;
 
-  const currentTokens = showAfter && after ? after.tokens : tokens;
-  const currentAoes = showAfter && after ? after.aoes : aoes;
+  const currentTokens = (showAfter && after ? after.tokens : tokens) ?? [];
+  const currentAoes = (showAfter && after ? after.aoes : aoes) ?? [];
+  const backgroundImage = showAfter && after ? after.background : background;
 
   const padding = 40;
   const innerSize = size - padding * 2;
@@ -176,6 +181,18 @@ export default function PositionSchema({
         >
           <rect width={size} height={size} fill="#0d0f17" rx={8} />
           {getArenaPath()}
+          
+          {backgroundImage && (
+            <image
+              href={backgroundImage} 
+              x={padding}
+              y={padding}
+              width={innerSize}
+              height={innerSize}
+              preserveAspectRatio="xMidYMid slice"
+              style={{ opacity: 0.4 }}
+            />
+          )}
 
           {/* Lignes cardinales */}
           <line
@@ -197,7 +214,7 @@ export default function PositionSchema({
             strokeDasharray="4,4"
           />
 
-          {/* AoEs — rendus avant les jetons pour être en dessous */}
+          {/* AoEs */}
           {currentAoes.map((aoe, i) => {
             const cx = padding + aoe.x * innerSize;
             const cy = padding + aoe.y * innerSize;
@@ -294,12 +311,13 @@ export default function PositionSchema({
             return null;
           })}
 
-          {/* Jetons joueurs & waymarks */}
           {currentTokens.map((pos, i) => {
             const { cx, cy } = toSvgCoords(pos.x, pos.y);
             const colors = isWaymark(pos.role)
               ? waymarkColors[pos.role as Waymark]
               : roleColors[pos.role as Role];
+
+            if (!colors) return null;
 
             const renderToken = () => {
               if (isWaymark(pos.role) && isLetterWaymark(pos.role as Waymark)) {

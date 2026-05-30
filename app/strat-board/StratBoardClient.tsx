@@ -122,6 +122,7 @@ export default function StratBoard() {
     activeTab === "before" ? setBeforeState : setAfterState;
 
   const positionsJson = JSON.stringify({
+    background: typeof backgroundImage === "string" ? backgroundImage : null,
     tokens: currentState.elements.map((el) => ({
       role: el.id === "BOSS" ? "Boss" : el.id,
       x: Math.round((el.x / 100) * 100) / 100,
@@ -280,6 +281,23 @@ export default function StratBoard() {
     if (aoe.angle !== undefined) setAoeAngle(aoe.angle);
     if (aoe.width !== undefined) setAoeWidth(aoe.width);
   };
+
+  const convertToBase64 = (file: File) => {
+    return new Promise<string | ArrayBuffer | null>((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => resolve(fileReader.result);
+      fileReader.onerror = (error) => reject(error);
+    });
+  };
+
+  convertToBase64(backgroundImage as unknown as File).then((base64) => {
+    if (typeof base64 === "string") {
+      setBackgroundImage(base64);
+    }
+  });
+
+
 
   const handleCopy = () => {
     navigator.clipboard.writeText(positionsJson);
