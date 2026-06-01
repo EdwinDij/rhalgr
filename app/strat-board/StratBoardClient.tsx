@@ -67,6 +67,7 @@ const ROLE_COLORS: Record<
   "2": { bg: "#1e3a8a", border: "#3b82f6", text: "#93c5fd" },
   "3": { bg: "#713f12", border: "#eab308", text: "#fde047" },
   "4": { bg: "#4c1d95", border: "#a855f7", text: "#d8b4fe" },
+  ADDS: { bg: "#1a1a1a", border: "#6b7280", text: "#d1d5db" },
 };
 
 const ROLE_STYLES: Record<string, string> = {
@@ -282,22 +283,20 @@ export default function StratBoard() {
     if (aoe.width !== undefined) setAoeWidth(aoe.width);
   };
 
-  const convertToBase64 = (file: File) => {
-    return new Promise<string | ArrayBuffer | null>((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (error) => reject(error);
-    });
-  };
+  // const convertToBase64 = (file: File) => {
+  //   return new Promise<string | ArrayBuffer | null>((resolve, reject) => {
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
+  //     fileReader.onload = () => resolve(fileReader.result);
+  //     fileReader.onerror = (error) => reject(error);
+  //   });
+  // };
 
-  convertToBase64(backgroundImage as unknown as File).then((base64) => {
-    if (typeof base64 === "string") {
-      setBackgroundImage(base64);
-    }
-  });
-
-
+  // // convertToBase64(backgroundImage as unknown as File).then((base64) => {
+  // //   if (typeof base64 === "string") {
+  // //     setBackgroundImage(base64);
+  // //   }
+  // // });
 
   const handleCopy = () => {
     navigator.clipboard.writeText(positionsJson);
@@ -668,6 +667,28 @@ export default function StratBoard() {
                     className={`w-full py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-2 ${isPlaced ? "border-gray-800 text-gray-600 bg-transparent" : "border-red-800 text-red-400 bg-red-950/20 hover:bg-red-950/40"}`}
                   >
                     ⚔️ {isPlaced ? "Boss placé" : "Placer le Boss"}
+                  </button>
+                );
+              })()}
+            </div>
+            <div className="px-5 py-4 border-b border-gray-800/40">
+              <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                <Swords size={10} /> Adds
+              </p>
+              {(() => {
+                return (
+                  <button
+                    onClick={() => {
+                      setActiveTool("player");
+                      setSelectedRoleToAdd("ADDS");
+                    }}
+                    className={`w-full py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                      selectedRoleToAdd === "ADDS" && activeTool === "player"
+                        ? "border-amber-500 text-amber-400 bg-amber-500/10"
+                        : "border-gray-700 text-gray-400 bg-gray-800/20 hover:bg-gray-800/40"
+                    }`}
+                  >
+                    ⚔️ Placer un Add
                   </button>
                 );
               })()}

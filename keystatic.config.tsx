@@ -15,22 +15,40 @@ const positionSchemaBlock = block({
       defaultValue: "circle",
     }),
     size: fields.number({ label: "Taille de l'arène (px)", defaultValue: 400 }),
+    backgroundImage: fields.image({
+      label: "Image de fond de l'arène",
+      directory: "public/images/arenas",
+      publicPath: "/images/arenas/",
+    }),
     positions: fields.text({
-      label: "Positions des tokens (Format JSON String)",
+      label: "Positions initiales (Format JSON String)",
       multiline: true,
     }),
     positionsAfter: fields.text({
-      // 👈
       label: "Positions — Après (JSON, optionnel)",
       multiline: true,
     }),
   },
   ContentView: (props) => {
-    let count = 0;
+    let tokenCount = 0;
+    let aoeCount = 0;
+
     try {
-      if (props.value.positions)
-        count = JSON.parse(props.value.positions).length;
-    } catch (e) {}
+      if (props.value.positions) {
+        const parsed = JSON.parse(props.value.positions);
+        if (Array.isArray(parsed)) {
+          tokenCount = parsed.length;
+        } else if (typeof parsed === "object" && parsed !== null) {
+          tokenCount = parsed.tokens?.length || 0;
+          aoeCount = parsed.aoes?.length || 0;
+        }
+      }
+    } catch (e) {
+      // Le JSON est en cours d'écriture ou invalide, on ignore l'erreur en attendant la saisie complète
+    }
+
+    const hasBgImage = !!props.value.backgroundImage;
+
     return (
       <div
         style={{
@@ -39,10 +57,33 @@ const positionSchemaBlock = block({
           borderRadius: "6px",
           border: "1px solid #334155",
           color: "#f8fafc",
+          display: "flex",
+          justifyContent: "between",
+          alignItems: "center",
+          gap: "8px",
         }}
       >
-        📍 <strong>[Schéma Arena]</strong> {props.value.label || "Sans titre"} —
-        Forme : <em>{props.value.shape}</em> ({count} tokens)
+        <div style={{ flex: 1 }}>
+          📍 <strong>[Schéma Arena]</strong> {props.value.label || "Sans titre"}{" "}
+          — Forme :{" "}
+          <span style={{ textTransform: "capitalize", color: "#f59e0b" }}>
+            {props.value.shape}
+          </span>{" "}
+          ({tokenCount} joueurs{aoeCount > 0 ? ` • ${aoeCount} AoE` : ""})
+        </div>
+        {hasBgImage && (
+          <span
+            title="Image de fond détectée"
+            style={{
+              fontSize: "14px",
+              backgroundColor: "#334155",
+              padding: "2px 6px",
+              borderRadius: "4px",
+            }}
+          >
+            🖼️ Fond
+          </span>
+        )}
       </div>
     );
   },

@@ -2,7 +2,17 @@
 import { useState } from "react";
 
 type Shape = "circle" | "square" | "rectangle";
-type Role = "MT" | "OT" | "H1" | "H2" | "R1" | "R2" | "M1" | "M2" | "Boss";
+type Role =
+  | "MT"
+  | "OT"
+  | "H1"
+  | "H2"
+  | "R1"
+  | "R2"
+  | "M1"
+  | "M2"
+  | "Boss"
+  | "ADDS";
 type Waymark = "A" | "B" | "C" | "D" | "1" | "2" | "3" | "4";
 
 interface AoE {
@@ -28,6 +38,7 @@ interface PositionSchemaProps {
   shape?: Shape;
   label?: string;
   size?: number;
+  backgroundImage?: string; 
 }
 
 const roleColors: Record<Role, { bg: string; text: string; border: string }> = {
@@ -40,6 +51,7 @@ const roleColors: Record<Role, { bg: string; text: string; border: string }> = {
   M1: { bg: "#78350f", text: "#ffffff", border: "#fb923c" },
   M2: { bg: "#78350f", text: "#ffffff", border: "#fdba74" },
   Boss: { bg: "#4c1d95", text: "#ffffff", border: "#a78bfa" },
+  ADDS: { bg: "#4c1d95", text: "#ffffff", border: "#c4b5fd" },
 };
 
 const waymarkColors: Record<
@@ -70,10 +82,10 @@ const parsePositions = (
   try {
     const raw = typeof prop === "string" ? JSON.parse(prop) : prop;
     if (Array.isArray(raw)) return { tokens: raw, aoes: [], background: null };
-    return { 
-      tokens: raw.tokens ?? [], 
-      aoes: raw.aoes ?? [], 
-      background: raw.background || null 
+    return {
+      tokens: raw.tokens ?? [],
+      aoes: raw.aoes ?? [],
+      background: raw.background || null,
     };
   } catch (e) {
     console.error("Erreur de parsing des positions de l'arène :", e);
@@ -86,7 +98,8 @@ export default function PositionSchema({
   positionsAfter: positionsAfterProp,
   shape = "circle",
   label,
-  size = 400,
+  size = 500,
+  backgroundImage: directBackgroundImage, 
 }: PositionSchemaProps) {
   const [showAfter, setShowAfter] = useState(false);
 
@@ -95,14 +108,21 @@ export default function PositionSchema({
 
   const currentTokens = (showAfter && after ? after.tokens : tokens) ?? [];
   const currentAoes = (showAfter && after ? after.aoes : aoes) ?? [];
-  const backgroundImage = showAfter && after ? after.background : background;
+
+  const backgroundFromJson = showAfter && after ? after.background : background;
+  const finalBackgroundImage = backgroundFromJson || directBackgroundImage;
 
   const padding = 40;
   const innerSize = size - padding * 2;
   const center = size / 2;
   const tokenRadius = 16;
 
-  const getArenaPath = () => {
+  // Rendu des formes géométriques pour éviter la répétition (réutilisé pour le fond et le masque)
+  const renderArenaShape = (
+    fillColor: string,
+    strokeColor?: string,
+    strokeW = 0,
+  ) => {
     switch (shape) {
       case "circle":
         return (
@@ -110,9 +130,9 @@ export default function PositionSchema({
             cx={center}
             cy={center}
             r={innerSize / 2}
-            fill="#1a1a2e"
-            stroke="#374151"
-            strokeWidth={2}
+            fill={fillColor}
+            stroke={strokeColor}
+            strokeWidth={strokeW}
           />
         );
       case "square":
@@ -122,9 +142,9 @@ export default function PositionSchema({
             y={padding}
             width={innerSize}
             height={innerSize}
-            fill="#1a1a2e"
-            stroke="#374151"
-            strokeWidth={2}
+            fill={fillColor}
+            stroke={strokeColor}
+            strokeWidth={strokeW}
           />
         );
       case "rectangle":
@@ -134,9 +154,9 @@ export default function PositionSchema({
             y={padding + innerSize * 0.15}
             width={innerSize}
             height={innerSize * 0.7}
-            fill="#1a1a2e"
-            stroke="#374151"
-            strokeWidth={2}
+            fill={fillColor}
+            stroke={strokeColor}
+            strokeWidth={strokeW}
           />
         );
     }
@@ -179,18 +199,28 @@ export default function PositionSchema({
           viewBox={`0 0 ${size} ${size}`}
           className="max-w-full"
         >
+          {/* Définition du masque pour que l'image épouse parfaitement la forme (ex: cercle) */}
+          <defs>
+            <clipPath id="arena-clip">{renderArenaShape("#ffffff")}</clipPath>
+          </defs>
+
+          {/* Fond noir de la boîte */}
           <rect width={size} height={size} fill="#0d0f17" rx={8} />
-          {getArenaPath()}
-          
-          {backgroundImage && (
+
+          {/* Couleur de base de l'arène */}
+          {renderArenaShape("#1a1a2e", "#374151", 2)}
+
+          {/* IMAGE DE FOND (Appliquée seulement si présente et masquée à la forme de l'arène) */}
+          {finalBackgroundImage && (
             <image
-              href={backgroundImage} 
+              href={finalBackgroundImage}
               x={padding}
               y={padding}
               width={innerSize}
               height={innerSize}
               preserveAspectRatio="xMidYMid slice"
-              style={{ opacity: 0.4 }}
+              clipPath="url(#arena-clip)" // <-- Applique le détourage parfait ici
+              style={{ opacity: 0.35 }} // Légèrement réduit pour que les Waymarks/AoE restent très lisibles
             />
           )}
 
