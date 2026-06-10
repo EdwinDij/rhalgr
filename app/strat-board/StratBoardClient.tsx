@@ -283,20 +283,6 @@ export default function StratBoard() {
     if (aoe.width !== undefined) setAoeWidth(aoe.width);
   };
 
-  // const convertToBase64 = (file: File) => {
-  //   return new Promise<string | ArrayBuffer | null>((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsDataURL(file);
-  //     fileReader.onload = () => resolve(fileReader.result);
-  //     fileReader.onerror = (error) => reject(error);
-  //   });
-  // };
-
-  // // convertToBase64(backgroundImage as unknown as File).then((base64) => {
-  // //   if (typeof base64 === "string") {
-  // //     setBackgroundImage(base64);
-  // //   }
-  // // });
 
   const handleCopy = () => {
     navigator.clipboard.writeText(positionsJson);
