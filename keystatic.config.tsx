@@ -28,6 +28,10 @@ const positionSchemaBlock = block({
       label: "Positions — Après (JSON, optionnel)",
       multiline: true,
     }),
+    phases: fields.text({
+      label: "Phases (Format JSON Array, optionnel)",
+      multiline: true,
+    }),
   },
   ContentView: (props) => {
     let tokenCount = 0;
