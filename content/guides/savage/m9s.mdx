@@ -1,79 +1,265 @@
 ---
-title: M9S — AAC Heavyweight Match 1
+title: M9S — Poids Lourds CCA Match 1
 description: >-
-  Guide complet du premier boss du tier 3 de l'Arcadion sadique (patch 7.4).
-  Premier affrontement de la saison Heavyweight.
+  Guide complet de Vamp Fatale, premier boss du tier Poids Lourds de l'Arcadion Sadique (patch 7.4).
+  Scies circulaires, tours de prison et chauve-souris enchaînées.
 extension: Dawntrail
 bossCount: 1
-iLvl: 750
+iLvl: 775
 currentTier: oui
 updatedAt: 2026-06-10
 ---
 
 ## Préparation & Conventions
 
-Avant de pull, définissez les conventions suivantes avec votre groupe :
+**Groupes :**
 
-**Light Parties :** Groupe 1 priorité Nord-Ouest / Groupe 2 priorité Sud-Est.
+- **Groupe 1** : MT · H1 · R1 · M1 → Priorité **Nord / Ouest**
+- **Groupe 2** : OT · H2 · R2 · M2 → Priorité **Sud / Est**
 
-**Partenaires :** 1 Tank ou Healer + 1 DPS (Distance ou Mêlée).
+**Absorption d'éther :** Sur certaines AoE, si un joueur meurt, Vamp Fatale absorbe son éther et gagne un **stack de buff DPS permanent**. À **×8 stacks**, les AoE de Demi-Lunes et d'Attaque Extrême sont fortement amplifiées.
 
-**Spreads :** Supports au Nord, DPS au Sud.
+**Enrage :** ~9:59
 
 ---
 
 <PhaseSection name="Mécaniques de base">
 
 <MechanicCard
-  name="[Nom du tankbuster]"
-  type="Tankbuster"
-  description="Description de l'attaque principale sur le tank. Activez la posture défensive."
-  tip="Assurez le swap si double hit."
+  name="Voix Mortelle"
+  type="Raid wide"
+  description="Dommages sur tout le raid. Mitigation de groupe recommandée."
 />
 
 <MechanicCard
-  name="[Nom de l'AoE de raid]"
+  name="Attaque Extrême"
+  type="Tankbuster"
+  description="AoE circulaire sur les 2 joueurs en tête d'aggro (les 2 tanks). Activez vos postures défensives simultanément."
+  tip="Au ×8 stacks de buff DPS, l'AoE est énorme — les tanks doivent s'écarter l'un de l'autre. Utilisez vos invincibles si disponibles."
+/>
+
+<MechanicCard
+  name="Pluie Brutale"
+  type="Multi-Share"
+  description="Dégâts partagés en plusieurs coups successifs : 3 coups en début de fight, puis 4, puis 6 en fin. Restez groupés par Light Party."
+  tip="À 6 coups avec ×8 buff DPS, les dégâts sont critiques — mitigation complète et soins de zone obligatoires."
+/>
+
+<MechanicCard
+  name="Demi-Lunes"
+  type="Positional"
+  description="AoE couvrant une moitié de l'arène (gauche puis droite, ou inversement). Regardez l'animation du boss pour déterminer le premier côté."
+  tip="Au ×8 stacks, l'AoE prend toute la largeur de la hitbox du boss — restez collés contre le bord opposé."
+/>
+
+<MechanicCard
+  name="Fauchage du Public"
   type="Raid wide"
-  description="Dommages sur tout le raid. Mitigation de groupe requise."
+  description="RaidWide + buff DPS permanent +4 sur le boss. Ce buff est cumulatif : ×4 après la 1ère utilisation, ×8 après la 2ème."
+/>
+
+<MechanicCard
+  name="Final Fatal"
+  type="Raid wide"
+  description="Gros RaidWide suivi d'un changement d'arène (circulaire) avec plusieurs AoE circulaires au sol à esquiver."
+/>
+
+<MechanicCard
+  name="Soif Insatiable"
+  type="Raid wide"
+  description="RaidWide signalant le retour à l'arène de base (carrée)."
 />
 
 </PhaseSection>
 
 ---
 
-<PhaseSection name="Phase 1 — Opener" timeline="0:00">
+<PhaseSection name="Piétinement Fatal" timeline="~0:20">
 
-Description des premiers mécanismes du fight.
+Vamp Fatale lance une **grosse AoE autour d'elle**, puis un **anneau** apparaît au centre et s'étend progressivement vers les bords. Chaque joueur reçoit un debuff **« Chauve-souris »** à dissiper en touchant l'anneau.
+
+**Attention :** au contact de l'anneau, une AoE circulaire explose autour du joueur (ou de la chauve-souris touchée) — **espacez les entrées** pour ne pas vous toucher mutuellement.
+
+**Ordre d'entrée dans l'anneau :**
+
+1. **MT** entre en premier, proche du boss. Son AoE explose immédiatement → il remonte légèrement vers le Nord en maintenant le boss au centre.
+2. **OT · M1 · M2** entrent quand l'anneau est à mi-arène et que les premières AoE de chauve-souris ont explosé.
+3. **H1 · H2 · R1 · R2** restent en périphérie et entrent en tout dernier, quand l'anneau approche du bord.
 
 <PositionSchema
-  label="Positions initiales"
+  label="Piétinement Fatal — Ordre d'entrée"
   shape="square"
   size={400}
-  positions='{"tokens":[{"role":"MT","x":0.5,"y":0.35},{"role":"OT","x":0.5,"y":0.65},{"role":"H1","x":0.35,"y":0.5},{"role":"H2","x":0.65,"y":0.5},{"role":"M1","x":0.38,"y":0.38},{"role":"M2","x":0.62,"y":0.38},{"role":"R1","x":0.38,"y":0.62},{"role":"R2","x":0.62,"y":0.62},{"role":"Boss","x":0.5,"y":0.5}],"aoes":[],"movements":[]}'
+  phases='[{"label":"Début — MT entre","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.37},{"role":"OT","x":0.35,"y":0.38},{"role":"M1","x":0.42,"y":0.42},{"role":"M2","x":0.58,"y":0.42},{"role":"H1","x":0.18,"y":0.18},{"role":"H2","x":0.82,"y":0.18},{"role":"R1","x":0.18,"y":0.82},{"role":"R2","x":0.82,"y":0.82}],"aoes":[{"type":"circle","x":0.5,"y":0.5,"range":0.13,"direction":0}],"movements":[]},{"label":"Milieu — OT + M1 + M2","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.26},{"role":"OT","x":0.37,"y":0.34},{"role":"M1","x":0.43,"y":0.36},{"role":"M2","x":0.55,"y":0.36},{"role":"H1","x":0.15,"y":0.18},{"role":"H2","x":0.85,"y":0.18},{"role":"R1","x":0.15,"y":0.82},{"role":"R2","x":0.85,"y":0.82}],"aoes":[{"type":"circle","x":0.5,"y":0.5,"range":0.28,"direction":0}],"movements":[]},{"label":"Fin — Distants entrent","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.2},{"role":"OT","x":0.3,"y":0.28},{"role":"M1","x":0.38,"y":0.28},{"role":"M2","x":0.55,"y":0.28},{"role":"H1","x":0.15,"y":0.15},{"role":"H2","x":0.85,"y":0.15},{"role":"R1","x":0.15,"y":0.85},{"role":"R2","x":0.85,"y":0.85}],"aoes":[{"type":"circle","x":0.5,"y":0.5,"range":0.43,"direction":0}],"movements":[]}]'
 />
 
 </PhaseSection>
 
 ---
 
-<PhaseSection name="Phase 2 — [Nom de la mécanique]" timeline="~1:00">
+<PhaseSection name="Crissement Sadique N°1 — Phase Scie" timeline="~1:00">
 
-Description de la mécanique. Expliquez le déclencheur, la résolution et les positions.
+**DPS Check.** Une scie circulaire avance colonne par colonne sur l'arène. Si elle atteint le bord opposé → **Wipe**. Focus DPS sur la scie en priorité.
+
+**Structure en 3 étapes :**
+
+**I) Premier set** : La scie est divisée en 4 rangées — 2 s'illuminent en premier et indiquent l'ordre des AoE en ligne. Vamp Fatale lance **Demi-Lunes (Haut/Bas)** au même rythme que les 2 coups de scie.
+
+**II) Avancée** : La scie annonce une AoE devant elle (**one-shot au contact**) puis progresse d'une colonne. Même déroulement qu'en I.
+
+**III) Dernière ligne droite** : La scie fait ses 2 dernières AoE. Vamp Fatale passe en **Demi-Lunes Gauche/Droite** : il ne reste qu'**un seul safe spot** (l'autre est condamné par la Demi-Lune). La séquence se répète une 2ème fois puis c'est l'**Enrage** si la scie est encore active.
+
+<MechanicCard
+  name="Avancée"
+  type="Positional"
+  description="AoE devant la scie qui condamne définitivement cette zone (one-shot au contact). La scie avance ensuite d'une colonne."
+  tip="En phase III, la trace au sol de la scie précédente permet d'identifier le safe spot quand Demi-Lune obscurcit la vision."
+/>
+
+> **Note burst :** Les cooldowns de 120s tombent vers la fin de la phase Scie. Décalez légèrement pour les utiliser dès le retour de Vamp Fatale au centre.
+
+</PhaseSection>
+
+---
+
+<PhaseSection name="Libération d'Éther — Strat Static" timeline="~2:30">
+
+**4 paires de cônes** (8 au total, espacés de 45°) apparaissent sur l'arène. Les joueurs reçoivent des **marques par paire** (1 DPS + 1 Support). À la résolution, chaque marqué dépose une **flaque** qui explose ensuite en **croix +** ou en **×**.
+
+**Strat Static (norme actuelle) :**
+
+Chaque joueur rejoint une position fixe sur le bord, **entre deux cônes adjacents**. Il esquive les cônes, dépose la flaque, puis **tout le groupe se rassemble au centre**. Les 8 flaques étant placées entre les cônes, le centre est toujours safe quelle que soit la forme d'explosion.
 
 <PositionSchema
-  label="Avant résolution"
+  label="Libération d'Éther — Strat Static"
+  shape="circle"
+  size={400}
+  phases='[{"label":"Dépôt des flaques","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.35,"y":0.15},{"role":"H1","x":0.65,"y":0.15},{"role":"M1","x":0.15,"y":0.35},{"role":"R1","x":0.85,"y":0.35},{"role":"OT","x":0.65,"y":0.85},{"role":"H2","x":0.35,"y":0.85},{"role":"M2","x":0.15,"y":0.65},{"role":"R2","x":0.85,"y":0.65}],"aoes":[{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":270,"angle":25},{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":315,"angle":25},{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":0,"angle":25},{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":45,"angle":25},{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":90,"angle":25},{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":135,"angle":25},{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":180,"angle":25},{"type":"cone","x":0.5,"y":0.5,"range":0.45,"direction":225,"angle":25}],"movements":[]},{"label":"Résolution (stack centre)","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.44,"y":0.44},{"role":"H1","x":0.56,"y":0.44},{"role":"M1","x":0.44,"y":0.5},{"role":"R1","x":0.56,"y":0.5},{"role":"OT","x":0.56,"y":0.56},{"role":"H2","x":0.44,"y":0.56},{"role":"M2","x":0.5,"y":0.44},{"role":"R2","x":0.5,"y":0.56}],"aoes":[],"movements":[{"from":"MT","to":"M1"},{"from":"H1","to":"R1"},{"from":"OT","to":"M2"},{"from":"H2","to":"R2"}]}]'
+/>
+
+**Assignation des positions :**
+
+- MT → entre NW et N · H1 → entre N et NE
+- M1 → entre W et NW · R1 → entre NE et E
+- OT → entre SE et S · H2 → entre S et SW
+- M2 → entre SW et W · R2 → entre E et SE
+
+> **Mêlées :** Continuez à DPS jusqu'à recevoir la marque, puis rejoignez le bord pour déposer la flaque.
+
+</PhaseSection>
+
+---
+
+<PhaseSection name="Crissement Sadique N°2 — Double Scie & Tours" timeline="~4:30">
+
+Retour sur l'arène Scie avec une configuration plus chargée : **2 grosses scies fixes** (une par côté) + **2 petites scies mobiles** (axe N/S) + **tours tanks** + **tour Tesla**.
+
+**Éléments à gérer :**
+
+- **Boulets** (ex-tours tanks) → castent un RaidWide ; à détruire avant la fin du cast sinon gros saignement de groupe.
+- **Tour Tesla** → génère une zone électrique croissante ; laisse un DoT. Priorité aux distants (ils peuvent DPS depuis l'extérieur de la zone).
+- **Scies Circulaires** → évitez leur trajectoire.
+
+**Déroulement (×3 itérations) :**
+
+1. **MT → Tour Nord / OT → Tour Sud.**
+2. Les tours deviennent des **Boulets** → M1 + M2 focus en priorité.
+3. Cercle rouge au sol → **Tour Tesla** → R1 + R2 focus.
+4. **Voix Mortelle** (RaidWide) → nouvelle itération.
+5. Après 3 itérations : **Crissement Sadique** conclut la phase. Assurez-vous qu'il ne reste aucun Boulet ni Tesla actif.
+
+<PositionSchema
+  label="Crissement Sadique N°2 — Placement"
   shape="square"
   size={400}
-  phases='[{"label":"Avant","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.3},{"role":"OT","x":0.5,"y":0.7},{"role":"H1","x":0.3,"y":0.5},{"role":"H2","x":0.7,"y":0.5},{"role":"M1","x":0.35,"y":0.35},{"role":"M2","x":0.65,"y":0.35},{"role":"R1","x":0.35,"y":0.65},{"role":"R2","x":0.65,"y":0.65}],"aoes":[],"movements":[]},{"label":"Après","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.25},{"role":"OT","x":0.5,"y":0.75},{"role":"H1","x":0.25,"y":0.5},{"role":"H2","x":0.75,"y":0.5},{"role":"M1","x":0.3,"y":0.3},{"role":"M2","x":0.7,"y":0.3},{"role":"R1","x":0.3,"y":0.7},{"role":"R2","x":0.7,"y":0.7}],"aoes":[],"movements":[{"from":"MT","to":"H1"},{"from":"OT","to":"H2"}]}]'
+  positions='{"tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.15},{"role":"OT","x":0.5,"y":0.85},{"role":"H1","x":0.22,"y":0.35},{"role":"H2","x":0.78,"y":0.35},{"role":"M1","x":0.28,"y":0.5},{"role":"M2","x":0.72,"y":0.5},{"role":"R1","x":0.22,"y":0.65},{"role":"R2","x":0.78,"y":0.65}],"aoes":[{"type":"rect","x":0.12,"y":0.5,"range":0.8,"direction":90,"width":0.04},{"type":"rect","x":0.88,"y":0.5,"range":0.8,"direction":90,"width":0.04}],"movements":[]}'
 />
 
 </PhaseSection>
 
 ---
 
-<PhaseSection name="Phase 3 — [Nom de la mécanique]" timeline="~2:00">
+<PhaseSection name="Enfer Carcéral" timeline="~6:00">
 
-Description de la troisième mécanique clé.
+**4 Geôles Fatales** (tours) apparaissent sur l'arène, chacune avec un Add à éliminer. Simultanément, Vamp Fatale caste une **AoE en cône** sur les 4 joueurs restants :
+
+- **Onde Étalée** → Spread : 1 joueur par cône, espacés.
+- **Onde Agrégée** → Share : les 4 joueurs se stackent sur la grande ouverture.
+
+**Priorité des tours (sens horaire depuis A/Nord) :**
+`Tank → Heal → DPS Mêlée → DPS Distant`
+
+**Placement des cônes (3 ouvertures entre les tours) :**
+
+- **Grande ouverture** → Tank seul (Onde Étalée) ou tout le groupe (Onde Agrégée)
+- **Petite ouverture CW** (sens horaire depuis le tank) → Heal
+- **Petite ouverture CCW** (sens anti-horaire depuis le tank) → Mêlée + Distant
+
+<PositionSchema
+  label="Enfer Carcéral — Groupe 1 en tours"
+  shape="circle"
+  size={400}
+  phases='[{"label":"Onde Étalée (Spread)","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.15},{"role":"H1","x":0.85,"y":0.5},{"role":"M1","x":0.64,"y":0.83},{"role":"R1","x":0.2,"y":0.67},{"role":"OT","x":0.25,"y":0.25},{"role":"H2","x":0.7,"y":0.22},{"role":"M2","x":0.78,"y":0.72},{"role":"R2","x":0.22,"y":0.78}],"aoes":[{"type":"circle","x":0.5,"y":0.15,"range":0.07,"direction":0},{"type":"circle","x":0.85,"y":0.5,"range":0.07,"direction":0},{"type":"circle","x":0.64,"y":0.83,"range":0.07,"direction":0},{"type":"circle","x":0.2,"y":0.67,"range":0.07,"direction":0}],"movements":[]},{"label":"Onde Agrégée (Share)","tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.5,"y":0.15},{"role":"H1","x":0.85,"y":0.5},{"role":"M1","x":0.64,"y":0.83},{"role":"R1","x":0.2,"y":0.67},{"role":"OT","x":0.25,"y":0.22},{"role":"H2","x":0.32,"y":0.18},{"role":"M2","x":0.2,"y":0.28},{"role":"R2","x":0.18,"y":0.35}],"aoes":[{"type":"circle","x":0.5,"y":0.15,"range":0.07,"direction":0},{"type":"circle","x":0.85,"y":0.5,"range":0.07,"direction":0},{"type":"circle","x":0.64,"y":0.83,"range":0.07,"direction":0},{"type":"circle","x":0.2,"y":0.67,"range":0.07,"direction":0},{"type":"share","x":0.25,"y":0.25,"range":0.1,"direction":0}],"movements":[]}]'
+/>
+
+Après la première résolution, **les groupes s'inversent** : Groupe 2 prend les tours, Groupe 1 gère les cônes.
+
+</PhaseSection>
+
+---
+
+<PhaseSection name="Chiroptère Mortel" timeline="~7:30">
+
+**2 énormes tours** apparaissent en axe N/S ou E/O :
+
+- **Groupe 1** → Tour Nord (ou Ouest)
+- **Groupe 2** → Tour Sud (ou Est)
+
+Chaque joueur est **enchaîné à une chauve-souris** qui traverse lentement l'arène vers l'axe opposé. Restez proche — trop s'éloigner inflige **Damage Down + dégâts**.
+
+Pendant le trajet, Vamp Fatale enchaine des **AoE en cône alternant zones safe / non-safe**. Anticipez d'une AoE pour ne pas prendre de retard sur votre chauve-souris.
+
+En arrivant à destination, la chauve-souris annonce son AoE finale via un symbole :
+
+- **Cercle** → AoE circulaire : restez en dehors
+- **Donut** → AoE en donut : restez dessous
+
+La chauve-souris repart ensuite vers son point de départ et effectue une 2ème AoE finale (forme aléatoire).
+
+<PositionSchema
+  label="Chiroptère Mortel — Tours initiales (axe N/S)"
+  shape="circle"
+  size={400}
+  positions='{"tokens":[{"role":"Boss","x":0.5,"y":0.5},{"role":"MT","x":0.36,"y":0.18},{"role":"H1","x":0.5,"y":0.16},{"role":"M1","x":0.57,"y":0.2},{"role":"R1","x":0.64,"y":0.18},{"role":"OT","x":0.36,"y":0.82},{"role":"H2","x":0.5,"y":0.84},{"role":"M2","x":0.57,"y":0.8},{"role":"R2","x":0.64,"y":0.82}],"aoes":[{"type":"share","x":0.5,"y":0.18,"range":0.13,"direction":0},{"type":"share","x":0.5,"y":0.82,"range":0.13,"direction":0}],"movements":[]}'
+/>
+
+> **Conseil :** Utilisez le Sprint en cas de retard. La chauve-souris n'attend pas.
+
+</PhaseSection>
+
+---
+
+<PhaseSection name="Séquence finale" timeline="~8:00+">
+
+Le reste du fight ne présente pas de nouvelles mécaniques mais les enchaîne avec **×8 stacks de buff DPS** — les dégâts sont drastiquement amplifiés.
+
+**Ordre :**
+
+1. **Pluie Brutale ×6** — mitigation complète requise
+2. **Piétinement Fatal** — même mécanique qu'en début de fight
+3. **Demi-Lunes** — AoE amplifiée (prend toute la largeur de la hitbox)
+4. **Attaque Extrême** — AoE énorme : les tanks s'écartent l'un de l'autre, invincibles conseillés
+5. **Griffure Sanguine** — cônes alternants identiques à Chiroptère Mortel
+6. **Soif Insatiable** (RaidWide)
+7. **Fauchage du Public** (buff DPS max)
+8. **Final Fatal** → **ENRAGE**
+
+<MechanicCard
+  name="Griffure Sanguine"
+  type="Positional"
+  description="Succession d'AoE en cône alternant entre zones safe et non-safe, identique au système de cônes de Chiroptère Mortel."
+  tip="La zone safe est toujours l'opposé du cône précédent. Le pattern est identique à Chiroptère Mortel."
+/>
 
 </PhaseSection>
 
@@ -81,16 +267,35 @@ Description de la troisième mécanique clé.
 
 ## Notes par rôle
 
-**Tank :** Notez ici les responsabilités spécifiques des tanks (swaps, mitigations, positionnement du boss).
+**Tank (MT & OT) :**
+- Piétinement Fatal : MT entre en premier dans l'anneau, OT entre avec M1 + M2 en 2ème vague.
+- Attaque Extrême : Postures défensives simultanées obligatoires. Au ×8, écartez-vous l'un de l'autre — invincibles si disponibles.
+- Crissement Sadique N°2 : MT → Tour Nord / OT → Tour Sud. Rester sur la tour jusqu'à sa transformation en Boulet.
+- Enfer Carcéral (cône) : Se placer seul sur la grande ouverture (Onde Étalée) ou avec le groupe (Onde Agrégée).
 
-**Heal :** Notez ici les responsabilités des healers (heals de zone, ressurections prioritaires, mitigations).
+**Heal (H1 & H2) :**
+- Pluie Brutale : Soins de zone préventifs à chaque série. À 6 coups, les dégâts sont critiques — anticipez.
+- Crissement Sadique N°2 : Phase chargée en DoT potentiels — maintenez les soins en continu sur toute l'équipe.
+- Chiroptère Mortel : Soignez les joueurs qui prennent des dégâts de chaîne si trop éloignés de leur chauve-souris.
+- Enfer Carcéral (tour) : Prendre la 2ème tour en sens horaire depuis A. En cône, petite ouverture CW depuis le tank.
 
-**DPS :** Notez ici les spécificités DPS (uptime, positionnement pour les mécaniques, priorités de cible).
+**DPS Mêlée (M1 & M2) :**
+- Piétinement Fatal : Entrer dans l'anneau en 2ème vague avec OT.
+- Libération d'Éther : DPS jusqu'à réception de la marque, puis aller déposer la flaque au bord.
+- Crissement Sadique N°2 : Focus Boulets en priorité (détruire avant la fin du cast).
+- Enfer Carcéral (tour) : Prendre la 3ème tour (sens horaire depuis A). En cône, petite ouverture CCW depuis le tank.
+
+**DPS Distant (R1 & R2) :**
+- Piétinement Fatal : Rester en périphérie, entrer dans l'anneau en tout dernier.
+- Libération d'Éther : Même logique que les mêlées — DPS jusqu'à la marque.
+- Crissement Sadique N°2 : Focus Tour Tesla en priorité (rester à l'extérieur de la zone électrique).
+- Enfer Carcéral (tour) : Prendre la 4ème tour (sens horaire depuis A). En cône, petite ouverture CCW avec les mêlées.
 
 ---
 
 ## Ressources
 
-- [Plan raidplan.io](https://raidplan.io/plan/c2L5iJfuYIWXk1v7)
-- [The Balance — M9S](https://www.thebalanceffxiv.com)
+- [Plan raidplan.io — 1v7](https://raidplan.io/plan/c2L5iJfuYIWXk1v7)
+- [Guide ffxiv-eorzea.com](https://www.ffxiv-eorzea.com/guides-instances/guide-arcadion-sadique-m9s-poids-lourds-cca-match-1/2026/02/06/)
+- [The Balance FFXIV](https://www.thebalanceffxiv.com)
 - [FFLogs — M9S](https://www.fflogs.com)
