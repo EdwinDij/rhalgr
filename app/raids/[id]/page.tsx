@@ -5,6 +5,7 @@ import { getGuideById, getAllGuides } from "@/lib/mdx";
 import { getDifficulty } from "@/lib/difficulties";
 import MechanicCard from "../../components/raidsCard/MechanicCard";
 import PositionSchema from "../../components/raidComponents/PositionSchema";
+import PhaseSection from "../../components/raidComponents/PhaseSection";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const components = {
   MechanicCard,
   PositionSchema,
+  PhaseSection,
 };
 
 export async function generateStaticParams() {
