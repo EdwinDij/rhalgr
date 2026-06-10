@@ -1,5 +1,31 @@
 import { config, fields, collection } from "@keystatic/core";
-import { block } from "@keystatic/core/content-components";
+import { block, wrapper } from "@keystatic/core/content-components";
+
+const phaseSectionWrapper = wrapper({
+  label: "Phase / Section",
+  schema: {
+    name: fields.text({ label: "Nom de la phase" }),
+    timeline: fields.text({ label: "Timeline (ex: ~1:30)", validation: { isRequired: false } }),
+  },
+  ContentView: (props) => (
+    <div
+      style={{
+        padding: "8px 12px",
+        backgroundColor: "#1e293b",
+        borderRadius: "6px",
+        borderLeft: "3px solid #f59e0b",
+        color: "#f8fafc",
+      }}
+    >
+      ⚔️ <strong>{props.value.name || "Phase sans nom"}</strong>
+      {props.value.timeline && (
+        <span style={{ marginLeft: "8px", color: "#f59e0b", fontSize: "12px" }}>
+          {props.value.timeline}
+        </span>
+      )}
+    </div>
+  ),
+});
 
 const positionSchemaBlock = block({
   label: "Schéma de Position",
@@ -163,6 +189,7 @@ const guideSchema = (difficulty: string) => ({
       },
     },
     components: {
+      PhaseSection: phaseSectionWrapper,
       PositionSchema: positionSchemaBlock,
       MechanicCard: mechanicCardBlock,
     },
