@@ -101,6 +101,7 @@ const mechanicCardBlock = block({
         { label: "Stack", value: "Stack" },
         { label: "Spread", value: "Spread" },
         { label: "Positional", value: "Positional" },
+        { label: "Protean", value: "Protean" },
         { label: "Enrage", value: "Enrage" },
       ],
       defaultValue: "Raidwide",
